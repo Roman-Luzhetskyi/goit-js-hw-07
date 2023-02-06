@@ -5,32 +5,27 @@ function getRandomHexColor() {
 const createBtn = document.querySelector("#controls button[data-create]");
 const destroyBtn = document.querySelector("#controls button[data-destroy]");
 const boxes = document.querySelector("#boxes");
+const input = document.querySelector("#controls input[type=number]");
 
-const handler = () => {
-    const amount = document.querySelector("#controls input[type=number]").value;
-    boxes.innerHTML = null;
-    createBoxes(amount);
-};
-const removeHandler = () => {
-    boxes.innerHTML = null;
-};
-createBtn.addEventListener("click", handler);
+const getItemMarkup = (index) => `<div class="item"
+ style="width: ${30 + 10 * index}px; height: ${30 + 10 * index}px; 
+ background-color: ${getRandomHexColor()}"></div>`
 
-destroyBtn.addEventListener("click", removeHandler);
+const getItemListMarkup = (amount) => Array(amount).fill('').map((_, i) => getItemMarkup(i)).join('')
 
-function createBoxes(amount) {
-    if (amount >= 1 && amount <= 100) {
-        for (let i = 1; i <= amount; i++) {
-            boxes.insertAdjacentHTML(
-                "beforeend",
-                `<div style="width:${Math.floor(i * 10 + 20)}px; 
-        height: ${Math.floor(i * 10 + 20)}px; 
-        background-color:${getRandomHexColor()}; 
-        margin:10px; 
-        "></div>`
-            );
-        }
-    } else {
-        boxes.insertAdjacentHTML("beforeend", `<p>Wpisz liczbę od 1 do 100</p>`);
-    }
+const handleClickCreate = () => {
+  clearBoxes();
+  createBoxes(Number(input.value))
+}
+const handleClickDestroy = () => clearBoxes();
+
+createBtn.addEventListener('click', handleClickCreate);
+destroyBtn.addEventListener('click', handleClickDestroy);
+
+const createBoxes = (amount) => boxes.insertAdjacentHTML('afterbegin', getItemListMarkup(amount));
+
+const clearBoxes = () => {
+  while (boxes.childNodes.length > 0) {
+    boxes.firstChild.remove();
+  }
 }
