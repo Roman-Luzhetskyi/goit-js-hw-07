@@ -24,8 +24,6 @@ function createGalleryCards(images) {
         `).join('');
 }
 
-// import * as basicLightbox from 'basiclightbox'
-
 galleryDiv.addEventListener('click', openImage);
 
 function openImage(event) {
@@ -40,13 +38,11 @@ const instance = basicLightbox.create(`
 
 );
 
-instance.show();
-
-galleryDiv.addEventListener('keydown', e => {
-		if (e.key === 'Escape') {
+    instance.show();
+    
+galleryDiv.addEventListener('keydown', event => {
+		if (event.key === 'Escape') {
 			instance.close()
 		}
 	})
-
-
 }
