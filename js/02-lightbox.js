@@ -11,8 +11,8 @@ galleryDiv.innerHTML = galleryCard;
 
 function createGalleryCards(images) {
     return images.map(image => 
-        `<a class="gallery__item" href="large-image.jpg">
-  <img class="gallery__image" src="small-image.jpg" alt="Image description" />
+ `<a class="gallery__item" href="${image.original}" onclick="return false;">
+<img class="gallery__image" src="${image.preview}" alt="${image.description}" />
 </a>`
     ).join('');
 }
